@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07110d">
+  <title>Küçük Dünyamız ❤️</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- AÇILIŞ VE GİRİŞ EKRANI -->
+<main class="scene" id="scene">
+
+  <div class="garden-scene"></div>
+  <div class="dark-curtain" id="darkCurtain"></div>
+
+  <div class="opening-lamp" id="openingLamp">
+    <div class="opening-lamp-glow"></div>
+    <div class="opening-lamp-image">♡</div>
+    <div class="opening-cord"></div>
+    <button id="pull" class="pull" aria-label="Lambanın ipini aşağı çek">
+      <span></span>
+    </button>
+  </div>
+
+  <p class="pull-hint" id="pullHint">
+    İpi aşağı çek ve küçük dünyamızı keşfet...
+  </p>
+
+  <div class="romantic-message" id="romanticMessage"></div>
+
+  <section class="login" id="login">
+    <div class="login-heading">
+      <span class="eyebrow">SADECE İKİMİZE AİT</span>
+      <h1>Küçük Dünyamız</h1>
+      <p>Bu dünyaya açılan kapı yalnızca ikimize ait. ♡</p>
+    </div>
+
+    <form id="loginForm">
+      <label for="email">Kullanıcı adı</label>
+      <input
+        type="text"
+        id="email"
+        placeholder="Kullanıcı adın"
+        autocomplete="username"
+        autocapitalize="none"
+        spellcheck="false"
+        required
+      >
+
+      <label for="password">Şifre</label>
+      <div class="password-wrapper">
+        <input
+          type="password"
+          id="password"
+          placeholder="Şifren"
+          autocomplete="current-password"
+          required
+        >
+        <button
+          type="button"
+          id="togglePassword"
+          class="toggle-password"
+        >Göster</button>
+      </div>
+
+      <div class="forgot-password-wrapper">
+        <a href="#" id="forgotPassword">Şifremi Unuttum?</a>
+      </div>
+
+      <button type="submit" class="submit-button">
+        Dünyamıza Gir ♡
+      </button>
+    </form>
+
+    <div id="resetSection" hidden>
+      <h2>Yeni Şifreni Belirle ♡</h2>
+      <form id="resetForm">
+        <input
+          type="password"
+          id="newPassword"
+          placeholder="Yeni şifren"
+          minlength="8"
+          required
+        >
+        <button type="submit" class="submit-button">
+          Şifremi Yenile ♡
+        </button>
+      </form>
+    </div>
+
+    <p id="authMessage" class="auth-message" role="status"></p>
+  </section>
+
+  <div class="opening-footer">
+    <span>İKİ KALP · TEK DÜNYA</span>
+  </div>
+</main>
+
+
+<!-- GİRİŞ SONRASI ORTAK DÜNYA -->
+<div class="dashboard" id="dashboard" hidden>
+  <div class="ambient-background" aria-hidden="true">
+    <span class="ambient-glow ambient-glow--one"></span>
+    <span class="ambient-glow ambient-glow--two"></span>
+  </div>
+
+  <header class="topbar">
+    <a href="#" class="brand" aria-label="Küçük Dünyamız">
+      <span class="brand-icon">♡</span>
+      <span>Küçük Dünyamız</span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="welcome-user" id="userName">Hoş geldin</span>
+      <button id="notificationButton" class="notification-button" data-scroll="notificationsSection" aria-label="Bildirimler">
+        Bildirimler <span id="notificationBadge" class="notification-badge" hidden>0</span>
+      </button>
+      <button id="accountSettingsButton" class="account-settings-button" data-open="accountSettingsModal">
+        Hesap ayarları
+      </button>
+      <button id="logout" class="logout-button">Çıkış</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="eyebrow">BİZİM HİKÂYEMİZ</span>
+      <h1 id="coupleNames">Sen ♥ Ben</h1>
+      <p id="partnerStatus">
+        Birlikte oluşturduğumuz küçük dünyaya hoş geldin.
+      </p>
+      <span class="hero-heart">♡</span>
+    </div>
+  </section>
+
+  <main class="dashboard-content">
+
+    <section class="welcome-section">
+      <div>
+        <span class="eyebrow">HER ŞEYİN BİR ANLAMI VAR</span>
+        <h2>Bizim küçük evrenimiz</h2>
+        <p>
+          Burada kelimelerimizi, anılarımızı ve birlikte biriktirdiğimiz
+          güzel şeyleri saklayacağız.
+        </p>
+      </div>
+    </section>
+
+    <section class="home-soundtrack" aria-label="Ortak fon müziği">
+      <div class="home-soundtrack-copy">
+        <span class="eyebrow">BİZİM ORTAK EZGİMİZ</span>
+        <h2>Fon müziğimiz</h2>
+        <p id="backgroundMusicStatus" aria-live="polite">Birlikte dinleyeceğimiz bir MP3 seçin.</p>
+      </div>
+      <div class="home-soundtrack-controls">
+        <label for="backgroundMusicSelect">Ortak şarkı</label>
+        <select id="backgroundMusicSelect" disabled>
+          <option value="">Şarkılar yükleniyor...</option>
+        </select>
+        <button type="button" class="soundtrack-upload-button" data-open="musicModal">+ Müzik ekle</button>
+        <audio id="backgroundMusicPlayer" controls preload="none"></audio>
+      </div>
+    </section>
+
+    <!-- HIZLI ERİŞİM KARTLARI -->
+    <section class="feature-grid folder-grid" aria-label="Anı klasörlerimiz">
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--letters"><span>♡</span></div>
+        <div class="feature-icon">✉</div>
+        <h3>Mektuplarımız</h3>
+        <p><span id="letterFolderCount">0 mektup</span> · Birbirimize bıraktığımız kelimeler.</p>
+        <button data-scroll="lettersSection">Mektupları keşfet</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--memories"><span>✧</span></div>
+        <div class="feature-icon">✧</div>
+        <h3>Anılarımız</h3>
+        <p><span id="memoryFolderCount">0 anı</span> · Unutmak istemediğimiz güzel günler.</p>
+        <button data-scroll="memoriesSection">Anılarımıza bak</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--photos"><span>♡</span></div>
+        <div class="feature-icon">♡</div>
+        <h3>Fotoğraflarımız</h3>
+        <p><span id="photoFolderCount">0 kare</span> · Birlikte sakladığımız küçük anlar.</p>
+        <button data-scroll="photosSection">Albümü aç</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--music"><span>♫</span></div>
+        <div class="feature-icon">♫</div>
+        <h3>Bizim şarkılarımız</h3>
+        <p><span id="musicFolderCount">0 şarkı</span> · Birlikte dinlemek istediklerimiz.</p>
+        <button data-scroll="musicSection">Şarkılarımıza bak</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--notifications"><span>♡</span></div>
+        <div class="feature-icon">♡</div>
+        <h3>Bildirimlerimiz</h3>
+        <p><span id="notificationFolderCount">0 yeni</span> · Dünyamızdaki haberler.</p>
+        <button data-scroll="notificationsSection">Bildirimleri aç</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--favorites"><span>♥</span></div>
+        <div class="feature-icon">♥</div>
+        <h3>Favorilerimiz</h3>
+        <p>En sevdiğimiz mektup, anı ve kareler.</p>
+        <button data-scroll="favoritesSection">Favorileri aç</button>
+      </article>
+
+      <article class="feature-card">
+        <div class="folder-cover folder-cover--special-days"><span>✧</span></div>
+        <div class="feature-icon">✧</div>
+        <h3>Özel günlerimiz</h3>
+        <p>Birlikte kutlayacağımız tarihler.</p>
+        <button data-scroll="specialDaysSection">Takvimimizi aç</button>
+      </article>
+
+    </section>
+
+
+    <section class="collection-tools is-hidden" aria-label="İçerik arama ve filtreleme">
+      <label for="globalSearch">Dünyamızda ara</label>
+      <input id="globalSearch" type="search" placeholder="Başlık, tarih veya içerikte ara...">
+      <label for="typeFilter">Klasör</label>
+      <select id="typeFilter">
+        <option value="all">Tüm klasörler</option>
+        <option value="letter">Mektuplar</option>
+        <option value="memory">Anılar</option>
+        <option value="photo">Fotoğraflar ve videolar</option>
+        <option value="music">Şarkılar</option>
+        <option value="special_day">Özel günler</option>
+      </select>
+      <label for="dateFilter">Tarih</label>
+      <input id="dateFilter" type="date">
+    </section>
+
+    <!-- MEKTUPLAR -->
+    <section class="collection-section is-hidden" id="lettersSection">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">KELİMELERİMİZ</span>
+          <h2>Mektuplarımız</h2>
+        </div>
+        <button class="add-button" data-open="letterModal">
+          + Mektup yaz
+        </button>
+      </div>
+
+      <div class="content-list" id="lettersList">
+        <p class="empty-state">Mektuplar yükleniyor...</p>
+      </div>
+    </section>
+
+
+    <!-- ANILAR -->
+    <section class="collection-section is-hidden" id="memoriesSection">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ZAMANIN İÇİNDE</span>
+          <h2>Anılarımız</h2>
+        </div>
+        <button class="add-button" data-open="memoryModal">
+          + Anı ekle
+        </button>
+      </div>
+
+      <div class="content-list" id="memoriesList">
+        <p class="empty-state">Anılar yükleniyor...</p>
+      </div>
+    </section>
+
+
+    <!-- FOTOĞRAFLAR -->
+    <section class="collection-section is-hidden" id="photosSection">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">KARELERE SIĞAN HİKÂYEMİZ</span>
+          <h2>Fotoğraf albümümüz</h2>
+        </div>
+        <button class="add-button" data-open="photoModal">
+          + Fotoğraf veya video ekle
+        </button>
+      </div>
+
+      <div class="photo-grid" id="photosList">
+        <p class="empty-state">Fotoğraflar yükleniyor...</p>
+      </div>
+    </section>
+
+    <!-- ŞARKILAR -->
+    <section class="collection-section is-hidden" id="musicSection">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">BİZE EŞLİK EDEN EZGİLER</span>
+          <h2>Bizim şarkılarımız</h2>
+        </div>
+        <button class="add-button" data-open="musicModal">+ Şarkı ekle</button>
+      </div>
+      <div class="content-list" id="musicList">
+        <p class="empty-state">Şarkılar yükleniyor...</p>
+      </div>
+    </section>
+
+    <!-- BİLDİRİMLER -->
+    <section class="collection-section is-hidden" id="notificationsSection">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">KÜÇÜK DÜNYAMIZDAN</span>
+          <h2>Bildirimler</h2>
+        </div>
+      </div>
+      <div class="content-list" id="notificationsList">
+        <p class="empty-state">Bildirimler yükleniyor...</p>
+      </div>
+    </section>
+
+    <section class="collection-section is-hidden" id="favoritesSection">
+      <div class="section-heading">
+        <div><span class="eyebrow">KALBİMİZDE YER EDENLER</span><h2>Favorilerimiz</h2></div>
+      </div>
+      <div class="content-list" id="favoritesList"><p class="empty-state">Favoriler yükleniyor...</p></div>
+    </section>
+
+    <section class="collection-section is-hidden" id="specialDaysSection">
+      <div class="section-heading">
+        <div><span class="eyebrow">BİRLİKTE KUTLAYACAĞIMIZ GÜNLER</span><h2>Takvimimiz</h2></div>
+        <button class="add-button" data-open="specialDayModal">+ Özel gün ekle</button>
+      </div>
+      <div class="content-list" id="specialDaysList"><p class="empty-state">Takvim yükleniyor...</p></div>
+    </section>
+
+  </main>
+
+  <footer class="dashboard-footer">
+    <span>İKİ KALP · TEK DÜNYA</span>
+    <p>Her şeyin en güzeli, birlikte biriktirdiklerimiz. ❤️</p>
+  </footer>
+
+</div>
+
+
+<!-- HESAP AYARLARI -->
+<dialog class="app-modal" id="accountSettingsModal">
+  <form id="accountSettingsForm" class="modal-content" novalidate>
+    <button type="button" class="modal-close" data-close aria-label="Pencereyi kapat">×</button>
+    <span class="eyebrow">KİŞİSEL HESABIN</span>
+    <h2>Hesap ayarları ♡</h2>
+    <p class="settings-intro">Kullanıcı adı alanında mevcut adın görünür. Yalnızca değiştirmek istiyorsan yeni adını yaz; şifreyi değiştirmek istemiyorsan şifre alanlarını boş bırak. Bu ayarlar yalnızca kendi hesabını etkiler.</p>
+
+    <label for="settingsUsername">Kullanıcı adı</label>
+    <input
+      id="settingsUsername"
+      type="text"
+      maxlength="50"
+      autocomplete="username"
+      autocapitalize="none"
+      spellcheck="false"
+      placeholder="Yeni kullanıcı adın"
+    >
+
+    <label for="settingsPassword">Yeni şifre</label>
+    <input
+      id="settingsPassword"
+      type="password"
+      minlength="8"
+      autocomplete="new-password"
+      placeholder="En az 8 karakter"
+    >
+
+    <label for="settingsPasswordConfirm">Yeni şifreyi tekrar yaz</label>
+    <input
+      id="settingsPasswordConfirm"
+      type="password"
+      minlength="8"
+      autocomplete="new-password"
+      placeholder="Yeni şifreni doğrula"
+    >
+
+    <p class="form-message" id="accountSettingsMessage" role="status" aria-live="polite"></p>
+    <button type="submit" class="submit-button">Değişiklikleri kaydet ♡</button>
+  </form>
+</dialog>
+
+<!-- ŞARKI EKLEME PENCERESİ -->
+<dialog class="app-modal" id="musicModal">
+  <form id="musicForm" class="modal-content">
+    <button type="button" class="modal-close" data-close aria-label="Pencereyi kapat">×</button>
+    <span class="eyebrow">BİZE EŞLİK EDEN EZGİLER</span>
+    <h2>Bir şarkı ekle ♫</h2>
+    <label for="musicTitle">Şarkı adı</label>
+    <input id="musicTitle" type="text" maxlength="120" required placeholder="Şarkının adı">
+    <label for="musicArtist">Sanatçı</label>
+    <input id="musicArtist" type="text" maxlength="120" placeholder="Sanatçı adı">
+    <label for="musicUrl">Şarkı bağlantısı</label>
+    <input id="musicUrl" type="url" maxlength="1000" placeholder="https://...">
+    <label for="musicFile">veya MP3 dosyası</label>
+    <input id="musicFile" type="file" accept="audio/mpeg,.mp3">
+    <label for="musicCaption">Bu şarkının bizim için anlamı</label>
+    <textarea id="musicCaption" rows="3" maxlength="300" placeholder="İstersen kısa bir not ekle..."></textarea>
+    <label class="check-label">
+      <input type="checkbox" id="musicShared" checked>
+      Partnerim de bu şarkıyı görebilsin
+    </label>
+    <p class="form-message" id="musicMessage" role="status" aria-live="polite"></p>
+    <button type="submit" class="submit-button">Şarkıyı sakla ♫</button>
+  </form>
+</dialog>
+
+<dialog class="app-modal" id="specialDayModal">
+  <form id="specialDayForm" class="modal-content">
+    <button type="button" class="modal-close" data-close aria-label="Pencereyi kapat">×</button>
+    <span class="eyebrow">BİRLİKTE KUTLAYACAĞIMIZ GÜNLER</span>
+    <h2>Takvimimize ekle ♡</h2>
+    <label for="specialDayTitle">Günün adı</label>
+    <input id="specialDayTitle" type="text" maxlength="120" required placeholder="İlk buluşmamız">
+    <label for="specialDayDate">Tarih</label>
+    <input id="specialDayDate" type="date" required>
+    <label for="specialDayCategory">Türü</label>
+    <select id="specialDayCategory" required>
+      <option value="anniversary">Yıl dönümü</option>
+      <option value="birthday">Doğum günü</option>
+      <option value="first_meet">İlk buluşma</option>
+      <option value="other">Diğer</option>
+    </select>
+    <label class="check-label"><input type="checkbox" id="specialDayAnnual" checked> Her yıl hatırlat</label>
+    <label for="specialDayNote">Not</label>
+    <textarea id="specialDayNote" rows="3" maxlength="300" placeholder="Bu günün bizim için anlamı..."></textarea>
+    <p class="form-message" id="specialDayMessage" role="status" aria-live="polite"></p>
+    <button type="submit" class="submit-button">Takvime ekle ♡</button>
+  </form>
+</dialog>
+
+
+<!-- MEKTUP EKLEME PENCERESİ -->
+<dialog class="app-modal" id="letterModal">
+  <form id="letterForm" class="modal-content">
+    <button type="button" class="modal-close" data-close>×</button>
+    <span class="eyebrow">KELİMELERİNİ SAKLA</span>
+    <h2>Bir mektup yaz ♡</h2>
+
+    <label for="letterTitle">Mektubun başlığı</label>
+    <input
+      id="letterTitle"
+      type="text"
+      maxlength="120"
+      placeholder="Sana söylemek istediklerim..."
+      required
+    >
+
+    <label for="letterBody">Mektubun</label>
+    <textarea
+      id="letterBody"
+      rows="7"
+      placeholder="İçinden geçenleri buraya yaz..."
+      required
+    ></textarea>
+
+    <label for="letterDeliveryDate">Gelecekte açılsın mı? (isteğe bağlı)</label>
+    <input type="date" id="letterDeliveryDate">
+
+    <label class="check-label">
+      <input type="checkbox" id="letterShared" checked>
+      Partnerim de bu mektubu görebilsin
+    </label>
+
+    <p class="form-message" id="letterMessage"></p>
+
+    <button type="submit" class="submit-button">
+      Mektubu sakla ♡
+    </button>
+  </form>
+</dialog>
+
+
+<!-- ANI EKLEME PENCERESİ -->
+<dialog class="app-modal" id="memoryModal">
+  <form id="memoryForm" class="modal-content">
+    <button type="button" class="modal-close" data-close>×</button>
+    <span class="eyebrow">GÜZEL BİR ANI</span>
+    <h2>Yeni bir anı ekle ✧</h2>
+
+    <label for="memoryTitle">Anının başlığı</label>
+    <input
+      id="memoryTitle"
+      type="text"
+      maxlength="120"
+      placeholder="O güzel gün..."
+      required
+    >
+
+    <label for="memoryBody">Anımız</label>
+    <textarea
+      id="memoryBody"
+      rows="6"
+      placeholder="Bu günü neden unutmak istemiyorsun?"
+    ></textarea>
+
+    <label for="memoryDate">Tarih</label>
+    <input type="date" id="memoryDate">
+
+    <p class="form-message" id="memoryMessage"></p>
+
+    <button type="submit" class="submit-button">
+      Anıyı sakla ♡
+    </button>
+  </form>
+</dialog>
+
+
+<!-- FOTOĞRAF EKLEME PENCERESİ -->
+<dialog class="app-modal" id="photoModal">
+  <form id="photoForm" class="modal-content">
+    <button type="button" class="modal-close" data-close>×</button>
+    <span class="eyebrow">BİR KARE, BİR HATIRA</span>
+    <h2>Fotoğraf veya video ekle ♡</h2>
+
+    <label for="photoFile">Fotoğraf veya videonu seç</label>
+    <input
+      type="file"
+      id="photoFile"
+      accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+      required
+    >
+
+    <label for="photoDate">Anının tarihi</label>
+    <input type="date" id="photoDate">
+
+    <label for="photoCaption">Fotoğrafın hikâyesi</label>
+    <input
+      type="text"
+      id="photoCaption"
+      maxlength="200"
+      placeholder="Bu fotoğrafın bizim için anlamı..."
+    >
+
+    <p class="form-message" id="photoMessage"></p>
+
+    <button type="submit" class="submit-button">
+      Albüme ekle ♡
+    </button>
+  </form>
+</dialog>
+
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
